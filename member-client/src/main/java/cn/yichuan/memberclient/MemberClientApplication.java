@@ -19,7 +19,6 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @SpringBootApplication
 @EnableEurekaClient //本服务启动后，会自动注册到 Eureka 服务中
 @EnableSwagger2
-
 public class MemberClientApplication {
     public static void main(String[] args) {
         SpringApplication.run(MemberClientApplication.class, args);

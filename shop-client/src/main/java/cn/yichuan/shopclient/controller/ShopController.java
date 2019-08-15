@@ -1,5 +1,6 @@
 package cn.yichuan.shopclient.controller;
 
+import cn.yichuan.shopclient.share.MemberService;
 import cn.yichuan.shopclient.share.ShareMemberService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 
 @RestController
 @RequestMapping(value = "/shop")
@@ -21,6 +21,8 @@ public class ShopController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private MemberService memberService;
 
     @Autowired
     private ShareMemberService shareMemberService;
@@ -55,6 +57,22 @@ public class ShopController {
             System.out.println("远程Feign调用member服务的showInfo");
             // 远程调用
             return shareMemberService.showInfo();
+        } catch (Exception ex) {
+            ex.getStackTrace();
+        }
+        return "err";
+    }
+
+    /**
+     * @return
+     */
+    @ApiOperation("CallRibbon")
+    @RequestMapping(value = "call/member/CallRibbon", method = RequestMethod.GET)
+    @GetMapping(path = "call/member/CallRibbon")
+    public String CallRibbon() {
+        try {
+            System.out.println("CallRibbon...");
+            return memberService.showInfo();
         } catch (Exception ex) {
             ex.getStackTrace();
         }
