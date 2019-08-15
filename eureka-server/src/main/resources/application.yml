@@ -1,0 +1,28 @@
+server:
+  port: 8081
+#  address: 192.168.0.100
+
+spring:
+  application:
+    # 用于指定这个微服务名称，也就是在注册中心显示的名称，其他微服务同个这个名称调用服务
+    name: my-eureka-service
+
+eureka:
+  instance:
+    #hostname: localhost
+    hostname: 192.168.0.100
+    appname: yichuan-eureka-server # name
+    Connection: Keep-Alive
+    prefer-ip-address: true # ip show
+  # hostname: localhost
+
+  server:
+    enable-self-preservation: false #设为false，关闭自我保护
+    eviction-interval-timer-in-ms: 4000 # 清理间隔（单位毫秒，默认是60*1000）
+
+  client: #not a client,don't register with yourself
+    registerWithEureka: false #false
+    fetchRegistry: false # false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka  #设置与Eureka Server交行的地址查询服务和注册服务
+#spring:
