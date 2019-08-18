@@ -30,6 +30,15 @@ feign:
 #    cluster-name-expression: new String("default")
    # aggregator:
     # clusterConfig: default
+turbine:
+  app-config: my-shop-client,my-member-client,my-logistics-client
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
+  combine-host: true
+  instanceUrlSuffix:
+    default: actuator/hystrix.stream
+
 
 hystrix:
   command:
