@@ -3,6 +3,8 @@ package cn.yichuan.shopclient.controller;
 import cn.yichuan.shopclient.share.MemberService;
 import cn.yichuan.shopclient.share.ShareMemberService;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,9 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping(value = "/shop")
 public class ShopController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
+
 
     @Value("${remote.url}")
     String remoteUrl = "";
@@ -74,6 +79,7 @@ public class ShopController {
             System.out.println("CallRibbon...");
             return memberService.showInfo();
         } catch (Exception ex) {
+            logger.error("err:{}", ex.getMessage());
             ex.getStackTrace();
         }
         return "err";

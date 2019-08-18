@@ -27,7 +27,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableDiscoveryClient
 @EnableCircuitBreaker//
-@EnableHystrix //开启断路器功能
+@EnableHystrix //开启断路器功能 step2
 @EnableHystrixDashboard//  仪表盘
 //@EnableTurbine //Turbine聚合监控
 public class ShopClientApplication {

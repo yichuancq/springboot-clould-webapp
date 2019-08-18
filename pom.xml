@@ -76,6 +76,7 @@
             <artifactId>spring-retry</artifactId>
         </dependency>
         <!--熔断器-->
+        <!--step1-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
