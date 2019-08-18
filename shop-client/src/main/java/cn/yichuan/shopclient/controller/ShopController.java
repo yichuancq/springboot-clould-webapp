@@ -1,7 +1,7 @@
 package cn.yichuan.shopclient.controller;
 
-import cn.yichuan.shopclient.share.MemberService;
 import cn.yichuan.shopclient.share.ShareMemberService;
+import cn.yichuan.shopclient.share.ribbon.MemberService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +18,6 @@ import org.springframework.web.client.RestTemplate;
 public class ShopController {
 
     private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
-
-
     @Value("${remote.url}")
     String remoteUrl = "";
 
@@ -31,6 +29,7 @@ public class ShopController {
 
     @Autowired
     private ShareMemberService shareMemberService;
+
 
     /**
      * @return
@@ -51,6 +50,8 @@ public class ShopController {
     }
 
     /**
+     * 用feign进行远程调用API
+     *
      * @return
      */
     @ApiOperation("远程Feign调用member服务的showInfo")
@@ -69,6 +70,8 @@ public class ShopController {
     }
 
     /**
+     * 在ribbon使用断路器
+     *
      * @return
      */
     @ApiOperation("CallRibbon")
@@ -84,4 +87,22 @@ public class ShopController {
         }
         return "err";
     }
+
+    /**
+     * 在Feign中使用断路器
+     */
+    @ApiOperation("CallFeign")
+    @RequestMapping(value = "call/member/CallFeign", method = RequestMethod.GET)
+    @GetMapping(path = "call/member/CallFeign")
+    public String CallFeign() {
+        try {
+
+            // shareMemberService.showInfo();
+        } catch (Exception ex) {
+            logger.error("err:{}", ex.getMessage());
+            ex.getStackTrace();
+        }
+        return "err";
+    }
+
 }

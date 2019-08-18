@@ -6,6 +6,11 @@ spring:
     # 用于指定这个微服务名称，也就是在注册中心显示的名称，其他微服务同个这个名称调用服务
     name: my-logistics-client
 
+
+feign:
+  hystrix:
+    enabled: true # 开启Feign的熔断功能
+
 eureka:
   instance:
     appname: yichuan-logistics-clinet # name

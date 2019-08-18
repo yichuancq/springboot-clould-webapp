@@ -1,4 +1,4 @@
-package cn.yichuan.shopclient.share;
+package cn.yichuan.shopclient.share.ribbon;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
