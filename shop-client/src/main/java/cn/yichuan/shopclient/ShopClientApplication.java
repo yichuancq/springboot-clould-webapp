@@ -1,13 +1,16 @@
 package cn.yichuan.shopclient;
 
+import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.netflix.turbine.EnableTurbine;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
@@ -29,7 +32,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableCircuitBreaker//
 @EnableHystrix //开启断路器功能 step2
 @EnableHystrixDashboard//  仪表盘
-//@EnableTurbine //Turbine聚合监控
+@EnableTurbine //Turbine聚合监控
 public class ShopClientApplication {
 
     public static void main(String[] args) {
@@ -48,7 +51,23 @@ public class ShopClientApplication {
     }
 
     /**
-     * http://localhost:8083/swagger-ui.html#/
+     * 在微服务架构中为例保证程序的可用性，防止程序出错导致网络阻塞，出现了断路器模型。断路器的状况反应了一个程序的可用性和健壮性，
+     * 它是一个重要指标。Hystrix Dashboard是作为断路器状态的一个组件，提供了数据监控和友好的图形化界面。
+     *
+     * @return
+     */
+    @Bean
+    public ServletRegistrationBean getServlet() {
+        HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
+        ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+        registrationBean.setLoadOnStartup(1);
+        registrationBean.addUrlMappings("/actuator/hystrix.stream");
+        registrationBean.setName("HystrixMetricsStreamServlet");
+        return registrationBean;
+    }
+
+
+    /**
      * 可以定义多个组，比如本类中定义把test和demo区分开了
      * （访问页面就可以看到效果了）
      */

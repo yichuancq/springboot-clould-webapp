@@ -25,4 +25,4 @@ spring clould 工程案例
  
 * hystrix.stream
 
-  http://localhost:8083/hystrix.stream
+  http://localhost:8083/actuator/hystrix.stream
