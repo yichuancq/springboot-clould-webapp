@@ -1,0 +1,35 @@
+server:
+  port: 8087
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          search-paths: respo #仓库下配置文件搜索路径
+          username: xxxxx     # git仓库的账号
+          password: xxxxx     # git仓库的账号
+          uri: https://github.com/forezp/SpringcloudConfig # 配置git仓库的地址
+
+  application:
+    # 用于指定这个微服务名称，也就是在注册中心显示的名称，其他微服务同个这个名称调用服务
+    name: my-config-server
+
+eureka:
+  instance:
+    appname: my-config-server # name
+    prefer-ip-address: true # ip show
+
+  client: #客户端注册进eureka服务列表内
+    register-with-eureka: false #表示是否注册Eureka服务器,因为自身作为服务注册中心，所以为false
+    fetch-registry: false #是否从eureka上获取注册信息,表明自己是一个server
+    service-url:
+      defaultZone: http://192.168.0.100:8081/eureka #这个地址就是在 Eureka 服务端的 application.yml 上暴露出的服务地址（这行后面加注释，可能会报错）
+

@@ -22,3 +22,7 @@ spring clould 工程案例
 * hystrix.stream
 
   http://localhost:8083/actuator/hystrix.stream
+  
+* spring boot admin
+
+  http://192.168.0.100:8090/#/applications

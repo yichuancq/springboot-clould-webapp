@@ -2,10 +2,34 @@ server:
   port: 8082
 
 spring:
+  boot:
+    admin:
+      client:
+        url: http://192.168.0.100:8090    # server地址，
+        username: admin    #对应server端的账号密码，不配置就监控不到这个client。
+        password: admin
+        instance:
+          service-base-url: http://192.168.0.100:8082    #client地址
   application:
     # 用于指定这个微服务名称，也就是在注册中心显示的名称，其他微服务同个这个名称调用服务
     name: my-logistics-client
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #监控所有端点，其中health和status是必须监控的
+        exclude: configprops	#排除对配置信息的监控，每次浏览这个节点的时候，
+          #数据库的链接就一直释放不掉，最后导致超时，因为配置信息的监控也不重要，
+          #就不再监控这个节点，以下为可监控的endpoint。可以根据需要有选择的进行监控。
+          #- health,status,env,metrics,dump,jolokia,info,
+          #configprops,trace,logfile,refresh,flyway,
+        #liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
+# info信息会显示到SBA的server端，这里取的是maven中的数据
+info:
+  version: @project.version@
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
 
 feign:
   hystrix:
@@ -22,7 +46,7 @@ eureka:
     instance:
       #      lease-expiration-duration-in-seconds: 30
       #      lease-renewal-interval-in-seconds: 10
-      lease-renewal-interval-in-second: 5      #每隔5s心跳一次,证明本服务还活着
-      lease-expiration-duration-in-second: 10 #本服务10s内没有心跳,就将该服务从服务端剔除
+#      lease-renewal-interval-in-second: 5      #每隔5s心跳一次,证明本服务还活着
+#      lease-expiration-duration-in-second: 10 #本服务10s内没有心跳,就将该服务从服务端剔除
     service-url:
       defaultZone: http://192.168.0.100:8081/eureka #这个地址就是在 Eureka 服务端的 application.yml 上暴露出的服务地址（这行后面加注释，可能会报错）

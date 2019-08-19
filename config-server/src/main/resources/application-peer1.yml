@@ -1,0 +1,30 @@
+server:
+  port: 8088
+
+spring:
+  profiles: peer1
+
+
+#eureka:
+#  instance:
+#    hostname: peer1
+#  client:
+#    serviceUrl:
+#      defaultZone: http://peer2:8089/eureka/
+
+eureka:
+  instance:
+    appname: peer1 # name
+    prefer-ip-address: true # ip show
+#    hostname:
+
+  client: #客户端注册进eureka服务列表内
+    healthcheck:
+      enabled: true
+    instance:
+      #      lease-expiration-duration-in-seconds: 30
+      #      lease-renewal-interval-in-seconds: 10
+      lease-renewal-interval-in-second: 5      #每隔5s心跳一次,证明本服务还活着
+      lease-expiration-duration-in-second: 10 #本服务10s内没有心跳,就将该服务从服务端剔除
+    service-url:
+      defaultZone: http://192.168.0.100:8081/eureka #这个地址就是在 Eureka 服务端的 application.yml 上暴露出的服务地址（这行后面加注释，可能会报错）

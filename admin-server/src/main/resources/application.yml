@@ -1,0 +1,38 @@
+server:
+  port: 8090
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 200
+    min-spare-threads: 18
+
+spring:
+  boot:
+#    admin:
+#      context-path: yichuan-monitoring
+
+  security:
+    user:
+      password: admin
+      name: admim
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  application:
+    # 用于指定这个微服务名称，也就是在注册中心显示的名称，其他微服务同个这个名称调用服务
+    name: my-admin-server
+
+eureka:
+  instance:
+    appname: my-admin-server # name
+    prefer-ip-address: true # ip show
+
+  client: #客户端注册进eureka服务列表内
+    register-with-eureka: false #表示是否注册Eureka服务器,因为自身作为服务注册中心，所以为false
+    fetch-registry: false #是否从eureka上获取注册信息,表明自己是一个server
+    service-url:
+      defaultZone: http://192.168.0.100:8081/eureka #这个地址就是在 Eureka 服务端的 application.yml 上暴露出的服务地址（这行后面加注释，可能会报错）
+
