@@ -18,11 +18,7 @@ spring clould 工程案例
 * 熔断器
   
   http://localhost:8083/hystrix
-  
-* turbine.stream
-
-  http://localhost:8083/turbine.stream
- 
+   
 * hystrix.stream
 
   http://localhost:8083/actuator/hystrix.stream
